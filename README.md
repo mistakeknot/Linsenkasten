@@ -136,20 +136,39 @@ get_central_lenses → get_lens_neighborhood → explore territory
 - Only your Claude/AI API usage
 - No hidden charges from Linsenkasten
 
-## Local Installation (Optional)
+## Installation Options
 
-Want to run your own instance?
+### Option 1: npm Package (Recommended)
+
+Install via npm:
+
+```bash
+npm install -g linsenkasten-mcp
+```
+
+Add to your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "linsenkasten": {
+      "command": "linsenkasten-mcp"
+    }
+  }
+}
+```
+
+### Option 2: Local Development
+
+Want to run from source?
 
 ```bash
 # Clone this repo
-git clone https://github.com/yourusername/linsenkasten.git
+git clone https://github.com/mistakeknot/Linsenkasten.git
 cd linsenkasten
 
 # Install dependencies
 npm install
-
-# Configure API endpoint (optional)
-export LINSENKASTEN_API_URL=http://localhost:5001
 
 # Run locally
 npm start
