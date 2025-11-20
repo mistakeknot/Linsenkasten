@@ -1,0 +1,232 @@
+# Linsenkasten
+
+A cognitive augmentation toolkit that gives AI agents access to 256+ FLUX analytical lenses through graph-based navigation, creative thinking tools, and conceptual exploration.
+
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green)](https://modelcontextprotocol.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## What is Linsenkasten?
+
+Linsenkasten ("lens box" in German) is a knowledge graph of analytical frameworks from the [FLUX Collective](https://read.fluxcollective.org/) newsletter. It transforms 256+ conceptual lenses into an explorable graph that AI agents can navigate to:
+
+- **Make logical leaps** through bridge discovery
+- **Navigate concept space** systematically
+- **Find paradoxes** for dialectic thinking
+- **Break habitual patterns** with creative provocations
+- **Explore connections** between disparate ideas
+
+## Quick Start
+
+Add to your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "linsenkasten": {
+      "url": "https://linsenkasten.com/api/mcp/v1/sse"
+    }
+  }
+}
+```
+
+**Config location:**
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+Restart Claude Desktop. Done! 🎉
+
+## Features
+
+### 13 Tools for Creative Thinking
+
+**Core Exploration:**
+- `search_lenses` - Semantic search across 256+ lenses
+- `get_lens` - Detailed lens information
+- `get_related_lenses` - Find similar lenses
+- `get_lens_frames` - Thematic groupings
+
+**Creative Navigation:**
+- `find_lens_journey` - Discover conceptual paths between ideas
+- `find_bridge_lenses` - Connect disparate concepts for lateral thinking
+- `find_contrasting_lenses` - Explore paradoxes and tensions
+- `get_central_lenses` - Identify hub concepts in the network
+- `get_lens_neighborhood` - Explore conceptual neighborhoods
+- `random_lens_provocation` - Break thinking patterns with randomness
+
+### Graph-Powered Intelligence
+
+Built on a NetworkX graph with:
+- **256 lenses** from FLUX episodes 11-200
+- **Weighted relationships**: AI-discovered, frame-based, temporal, conceptual
+- **Centrality measures**: Betweenness, PageRank, eigenvector
+- **Path finding**: Navigate between any two concepts
+
+## Usage Examples
+
+### Find a Conceptual Journey
+```
+Use find_lens_journey to discover how "Systems Thinking" connects to "Innovation"
+```
+
+Output shows the intermediate concepts that bridge these ideas.
+
+### Bridge Disparate Ideas
+```
+Use find_bridge_lenses to find lenses connecting "Leadership", "Complexity", and "Communication"
+```
+
+Discover unexpected connections for creative problem-solving.
+
+### Explore Paradoxes
+```
+Use find_contrasting_lenses on "Exploit vs Explore" to find complementary tensions
+```
+
+Reveal deeper insights through dialectic exploration.
+
+### Find Hub Concepts
+```
+Use get_central_lenses with measure="betweenness" to identify key conceptual bridges
+```
+
+Map the conceptual landscape strategically.
+
+### Random Provocation
+```
+Use random_lens_provocation to get a creative spark
+```
+
+Break out of local thinking patterns.
+
+## Creative Workflows
+
+**Lateral Thinking:**
+```
+random_lens_provocation → find_bridge_lenses → combine_lenses
+```
+
+**Conceptual Navigation:**
+```
+find_lens_journey(start, end) → explore intermediate concepts
+```
+
+**Dialectic Exploration:**
+```
+find_contrasting_lenses → synthesize paradoxes
+```
+
+**Strategic Mapping:**
+```
+get_central_lenses → get_lens_neighborhood → explore territory
+```
+
+## Architecture
+
+**Zero LLM Costs for You:**
+- Users bring their own AI (Claude Desktop, Cursor, etc.)
+- Linsenkasten provides structured lens data
+- All reasoning happens client-side with user's API keys
+
+**What Linsenkasten Provides:**
+- NetworkX graph operations (path finding, centrality, etc.)
+- Supabase queries for lens metadata
+- Structured JSON responses
+
+**Your Costs:**
+- Only your Claude/AI API usage
+- No hidden charges from Linsenkasten
+
+## Local Installation (Optional)
+
+Want to run your own instance?
+
+```bash
+# Clone this repo
+git clone https://github.com/yourusername/linsenkasten.git
+cd linsenkasten
+
+# Install dependencies
+npm install
+
+# Configure API endpoint (optional)
+export LINSENKASTEN_API_URL=http://localhost:5001
+
+# Run locally
+npm start
+
+# Update Claude Desktop config
+{
+  "mcpServers": {
+    "linsenkasten": {
+      "command": "node",
+      "args": ["/path/to/linsenkasten/index.js"]
+    }
+  }
+}
+```
+
+## API Endpoints
+
+All tools are backed by REST API endpoints:
+
+- `/api/v1/creative/journey` - Path finding
+- `/api/v1/creative/bridges` - Bridge discovery
+- `/api/v1/creative/contrasts` - Paradox detection
+- `/api/v1/creative/central` - Centrality measures
+- `/api/v1/creative/neighborhood` - Local exploration
+- `/api/v1/creative/random` - Random sampling
+
+See [docs/API.md](docs/API.md) for full API documentation.
+
+## Resources
+
+Linsenkasten provides three MCP resources:
+
+- `lens://all` - Complete lens catalog (256+ lenses)
+- `lens://frames` - Thematic groupings (20+ frames)
+- `lens://graph` - Relationship network structure
+
+## Use Cases
+
+**For AI Agents:**
+- Enhance reasoning with proven analytical frameworks
+- Make unexpected connections between concepts
+- Navigate problem spaces systematically
+- Break out of local optima in thinking
+
+**For Knowledge Work:**
+- Research assistance with conceptual navigation
+- Creative problem-solving through lens combinations
+- Strategic thinking with hub concept identification
+- Learning paths through conceptual journeys
+
+**For Developers:**
+- Build AI agents with cognitive augmentation
+- Add analytical frameworks to your tools
+- Create knowledge navigation interfaces
+- Integrate FLUX lenses into workflows
+
+## About FLUX
+
+FLUX is a weekly newsletter from the [FLUX Collective](https://read.fluxcollective.org/) exploring systems thinking, organizational dynamics, and complexity. Each episode introduces analytical lenses for understanding complex systems.
+
+Linsenkasten makes these lenses computationally accessible for AI agents and tools.
+
+## Contributing
+
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+MIT License - see [LICENSE](LICENSE)
+
+## Links
+
+- **Live API**: https://linsenkasten.com/api/mcp/v1/sse
+- **FLUX Newsletter**: https://read.fluxcollective.org/
+- **Documentation**: [docs/](docs/)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/linsenkasten/issues)
+
+---
+
+Built with ❤️ for the AI agent ecosystem

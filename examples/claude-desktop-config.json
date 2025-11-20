@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "linsenkasten": {
+      "url": "https://linsenkasten.com/api/mcp/v1/sse"
+    }
+  }
+}
