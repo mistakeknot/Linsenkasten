@@ -205,36 +205,41 @@ class SupabaseLensStore:
 
             logger.info(f"get_frame_ids_for_lenses: Looking up {len(lens_names)} lenses: {lens_names}")
 
-            # Query lenses table for the specified lens names
-            # Using filter with PostgREST 'in' syntax
-            lens_names_formatted = f"({','.join(f'{name}' for name in lens_names)})"
-            logger.info(f"get_frame_ids_for_lenses: Formatted filter: lens_name.in.{lens_names_formatted}")
-
+            # Strategy: Query all lenses and filter in Python
+            # This is more reliable than trying to match Supabase query syntax
             result = self.client.table('lenses') \
                 .select('lens_name, frame_ids') \
-                .filter('lens_name', 'in', lens_names_formatted) \
                 .execute()
 
-            logger.info(f"get_frame_ids_for_lenses: Query returned {len(result.data) if result.data else 0} results")
-            if result.data:
-                logger.info(f"get_frame_ids_for_lenses: First result sample: {result.data[0] if result.data else 'none'}")
+            logger.info(f"get_frame_ids_for_lenses: Query returned {len(result.data) if result.data else 0} total lenses")
+
+            # Create a set of target lens names for fast lookup
+            target_names = set(lens_names)
+            logger.info(f"get_frame_ids_for_lenses: Filtering for {len(target_names)} target lenses")
 
             if result.data:
-                # Build mapping of lens name to frame_ids
+                # Build mapping of lens name to frame_ids (only for target lenses)
                 lens_frame_map = {}
                 for lens in result.data:
                     name = lens.get('lens_name')
-                    frame_ids = lens.get('frame_ids', [])
 
-                    # Handle frame_ids as either list or single string
-                    if isinstance(frame_ids, str):
-                        frame_ids = [frame_ids]
-                    elif not isinstance(frame_ids, list):
-                        frame_ids = []
+                    # Only include if this lens is in our target set
+                    if name in target_names:
+                        frame_ids = lens.get('frame_ids', [])
 
-                    lens_frame_map[name] = frame_ids
+                        # Handle frame_ids as either list or single string
+                        if isinstance(frame_ids, str):
+                            frame_ids = [frame_ids]
+                        elif not isinstance(frame_ids, list):
+                            frame_ids = []
 
-                logger.info(f"get_frame_ids_for_lenses: Built map with {len(lens_frame_map)} entries")
+                        lens_frame_map[name] = frame_ids
+
+                logger.info(f"get_frame_ids_for_lenses: Built map with {len(lens_frame_map)} entries (filtered from {len(result.data)} total)")
+                if lens_frame_map:
+                    logger.info(f"get_frame_ids_for_lenses: Sample match: {list(lens_frame_map.items())[0]}")
+                else:
+                    logger.warning(f"get_frame_ids_for_lenses: No matches found for target lenses: {target_names}")
                 return lens_frame_map
 
             logger.warning("get_frame_ids_for_lenses: No results from Supabase query")
