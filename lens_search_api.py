@@ -219,73 +219,41 @@ def get_lenses():
 
 @app.route('/api/v1/lenses/search', methods=['GET'])
 def search_lenses():
-    """Search lenses by keyword"""
-    query = request.args.get('q', '').lower()
+    """Search lenses by semantic similarity using embeddings"""
+    query = request.args.get('q', '')
     if not query:
         return jsonify({'success': False, 'error': 'Query parameter required'}), 400
-    
+
     # Try cache first
     cache_params = {'query': query}
     cached_result = query_cache.get('search_lenses', cache_params)
     if cached_result:
         return jsonify(cached_result)
-    
-    # Search using Supabase text search
-    search_results = supabase_store.text_search_lenses(query, k=100)
-    
-    # Also do manual scoring for more detailed results
-    all_lenses = supabase_store.get_all_lenses(limit=500)
-    
-    matches = []
-    for lens in all_lenses:
-        score = 0
-        match_locations = []
-        
-        # Search in lens name (highest weight)
-        if query in lens.get('name', '').lower():
-            score += 10
-            match_locations.append('name')
-        
-        # Search in definition
-        if query in lens.get('definition', '').lower():
-            score += 5
-            match_locations.append('definition')
-        
-        # Search in examples
-        for example in lens.get('examples', []):
-            if query in str(example).lower():
-                score += 3
-                match_locations.append('example')
-                break
-        
-        # Search in related concepts
-        for concept in lens.get('related_concepts', []):
-            if query in concept.lower():
-                score += 2
-                match_locations.append('concept')
-                break
-        
-        if score > 0:
-            matches.append({
-                'id': lens['id'],
-                'episode': lens.get('episode'),
-                'lens_type': lens.get('lens_type'),
-                'lens_name': lens.get('name'),
-                'definition': lens.get('definition'),
-                'examples': lens.get('examples', []),
-                'related_concepts': lens.get('related_concepts', []),
-                'relevance_score': score,
-                'match_locations': list(set(match_locations))
-            })
-    
-    # Sort by relevance score
-    matches.sort(key=lambda x: x['relevance_score'], reverse=True)
-    
+
+    # Use semantic search with embeddings (returns results sorted by similarity)
+    search_results = supabase_store.search_lenses_by_embedding(query, k=20)
+
+    # Format results for consistent API response
+    formatted_results = []
+    for lens in search_results:
+        formatted_results.append({
+            'id': lens['id'],
+            'episode': lens.get('episode'),
+            'lens_type': lens.get('lens_type'),
+            'lens_name': lens.get('name'),
+            'definition': lens.get('definition'),
+            'examples': lens.get('examples', []),
+            'related_concepts': lens.get('related_concepts', []),
+            'similarity': lens.get('similarity', 0),
+            'relevance_score': lens.get('similarity', 0) * 10  # Scale for backwards compatibility
+        })
+
     result = {
         'success': True,
         'query': query,
-        'count': len(matches),
-        'results': matches
+        'count': len(formatted_results),
+        'results': formatted_results,
+        'search_type': 'semantic'
     }
     
     # Cache the result
