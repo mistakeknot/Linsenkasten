@@ -304,7 +304,11 @@ class LensGraph:
             except:
                 centrality = nx.degree_centrality(self.graph)
         elif measure == 'pagerank':
-            centrality = nx.pagerank(self.graph)
+            try:
+                centrality = nx.pagerank(self.graph, max_iter=100, tol=1e-06)
+            except:
+                logger.warning("PageRank failed to converge, falling back to degree centrality")
+                centrality = nx.degree_centrality(self.graph)
         else:
             centrality = nx.degree_centrality(self.graph)
         
