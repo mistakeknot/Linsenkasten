@@ -147,13 +147,25 @@ async function cmdJourney(source, target) {
   }
 }
 
-async function cmdRandom() {
+async function cmdRandom(options) {
   try {
     printHeader('🎲 Random Lens Provocation');
 
-    const results = await api.getRandomProvocation();
+    const context = options.context || [];
+    const results = await api.getRandomProvocation(context.length > 0 ? context : null);
 
     if (results.success && results.provocation) {
+      // Show gap analysis if context was provided
+      if (results.gap_analysis) {
+        const gap = results.gap_analysis;
+        console.log(`${bold(cyan('Gap Analysis:'))}`);
+        console.log(`  Coverage: ${gap.coverage.explored}/${gap.coverage.total} frames (${Math.round((gap.coverage.explored / gap.coverage.total) * 100)}%)`);
+        if (gap.was_gap_biased) {
+          console.log(`  ${green('✨ Targeting unexplored area:')} ${bold(gap.suggested_from_frame)}`);
+        }
+        console.log('');
+      }
+
       const lens = results.provocation;
       console.log(formatLens(lens));
 
@@ -169,6 +181,68 @@ async function cmdRandom() {
       }
     } else {
       console.log(dim(results.error || 'Could not generate provocation.'));
+    }
+  } catch (error) {
+    printError(error.message);
+    process.exit(1);
+  }
+}
+
+async function cmdGaps(context) {
+  try {
+    printHeader('🔍 Thinking Gap Analysis');
+
+    if (!context || context.length === 0) {
+      printError('No context provided. Usage: linsenkasten gaps --context "Lens 1" --context "Lens 2"');
+      process.exit(1);
+    }
+
+    console.log(dim(`Analyzing ${context.length} explored lens${context.length > 1 ? 'es' : ''}...\n`));
+
+    const results = await api.detectThinkingGaps(context);
+
+    if (results.success) {
+      const cov = results.coverage;
+
+      console.log(`${bold('Coverage Summary:')}`);
+      console.log(`  ${green('Explored')}: ${cov.coverage_percentage}% (${Object.keys(cov.explored_frames).length}/${cov.total_frames} frames)`);
+      console.log(`  ${yellow('Unexplored')}: ${cov.unexplored_frames.length} frames`);
+      console.log(`  ${yellow('Underexplored')}: ${cov.underexplored_frames.length} frames (only 1 lens)\n`);
+
+      if (Object.keys(cov.explored_frames).length > 0) {
+        console.log(`${bold(green('✅ Explored Frames:'))}`);
+        Object.entries(cov.explored_frames).forEach(([frame, count]) => {
+          console.log(`  • ${bold(frame)}: ${count} lens${count > 1 ? 'es' : ''}`);
+        });
+        console.log('');
+      }
+
+      if (cov.unexplored_frames.length > 0) {
+        console.log(`${bold(yellow('⚠️  Unexplored Frames (Blind Spots):'))}`);
+        cov.unexplored_frames.slice(0, 10).forEach(frame => {
+          console.log(`  • ${frame}`);
+        });
+        if (cov.unexplored_frames.length > 10) {
+          console.log(dim(`\n  ...and ${cov.unexplored_frames.length - 10} more`));
+        }
+        console.log('');
+      }
+
+      if (results.suggestions && results.suggestions.length > 0) {
+        console.log(`${bold(cyan('💡 Suggested Lenses to Explore:'))}\n`);
+        results.suggestions.forEach(sugg => {
+          console.log(`${bold(magenta(sugg.frame))}`);
+          sugg.sample_lenses.forEach(lens => {
+            console.log(`  • ${bold(lens.name)} ${dim(`(Ep. ${lens.episode})`)}`);
+            console.log(`    ${dim(lens.definition.substring(0, 100))}...`);
+          });
+          console.log('');
+        });
+      }
+
+      console.log(dim(results.insight));
+    } else {
+      console.log(dim(results.error || 'Could not analyze thinking gaps.'));
     }
   } catch (error) {
     printError(error.message);
@@ -365,7 +439,17 @@ function parseArgs() {
     if (args[i].startsWith('--')) {
       const key = args[i].slice(2);
       const value = args[i + 1];
-      options[key] = value;
+
+      // Handle multiple occurrences of --context by accumulating into an array
+      if (key === 'context') {
+        if (!options.context) {
+          options.context = [];
+        }
+        options.context.push(value);
+      } else {
+        options[key] = value;
+      }
+
       i++; // skip next arg
     } else {
       params.push(args[i]);
@@ -406,7 +490,11 @@ async function main() {
         break;
 
       case 'random':
-        await cmdRandom();
+        await cmdRandom(options);
+        break;
+
+      case 'gaps':
+        await cmdGaps(options.context || []);
         break;
 
       case 'bridge':
