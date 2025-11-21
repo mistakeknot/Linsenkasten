@@ -7,6 +7,8 @@ A cognitive augmentation toolkit that gives AI agents access to 256+ FLUX analyt
 
 ## What is Linsenkasten?
 
+> **✨ New in v1.0.1**: Semantic search now works properly! Search queries use AI embeddings for true conceptual similarity instead of keyword matching. Queries like "decision making" or "leadership" now return highly relevant results.
+
 Linsenkasten ("lens box" in German) is a knowledge graph of analytical frameworks from the [FLUX Collective](https://read.fluxcollective.org/) newsletter. It transforms 256+ conceptual lenses into an explorable graph that AI agents can navigate to:
 
 - **Make logical leaps** through bridge discovery
