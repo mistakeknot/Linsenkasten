@@ -57,6 +57,12 @@ linsenkasten journey "Systems Thinking" "Innovation"
 # Get random provocation
 linsenkasten random
 
+# Analyze thinking gaps (NEW in v1.1.0)
+linsenkasten gaps --context "Pace Layering" --context "Innovation"
+
+# Get gap-aware random lens (NEW in v1.1.0)
+linsenkasten random --context "Pace Layering" --context "Innovation"
+
 # Find bridge lenses
 linsenkasten bridge "Leadership" "Complexity" "Communication"
 
@@ -115,7 +121,7 @@ linsenkasten contrasts "Explore vs Exploit"
 
 ## Features
 
-### 13 Tools for Creative Thinking
+### 15 Tools for Creative Thinking
 
 **Core Exploration:**
 - `search_lenses` - Semantic search across 256+ lenses
@@ -129,7 +135,11 @@ linsenkasten contrasts "Explore vs Exploit"
 - `find_contrasting_lenses` - Explore paradoxes and tensions
 - `get_central_lenses` - Identify hub concepts in the network
 - `get_lens_neighborhood` - Explore conceptual neighborhoods
-- `random_lens_provocation` - Break thinking patterns with randomness
+- `random_lens_provocation` - Break thinking patterns with randomness (now with gap-aware selection!)
+
+**Gap Detection (NEW in v1.1.0):**
+- `detect_thinking_gaps` - Analyze conceptual coverage across 28 FLUX frames
+- Gap-aware random selection - 80/15/5 biasing toward unexplored dimensions
 
 ### Graph-Powered Intelligence
 

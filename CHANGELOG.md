@@ -2,6 +2,32 @@
 
 All notable changes to linsenkasten-mcp will be documented in this file.
 
+## [1.1.0] - 2025-11-21
+
+### Added
+- **Gap Detection System**: Analyze conceptual coverage across 28 FLUX thematic frames to identify thinking blind spots
+- **`gaps` CLI command**: `linsenkasten gaps --context "Lens1" --context "Lens2"` shows which frames you've explored vs. neglected
+- **Gap-aware random selection**: `linsenkasten random --context "Lens1" --context "Lens2"` uses 80/15/5 biasing to favor unexplored dimensions
+- **`detect_thinking_gaps` MCP tool**: Full gap analysis for AI agents in Claude Desktop
+- **Context parameter for `random_lens_provocation` MCP tool**: Enables stateless gap tracking
+
+### How It Works
+- Pass lens names you've explored via `--context` flags (can be repeated)
+- System maps lenses to thematic frames and calculates coverage
+- Identifies unexplored frames (0 lenses), underexplored frames (1 lens), and explored frames (2+ lenses)
+- Biased random selection: 80% from unexplored, 15% from underexplored, 5% from any frame
+- Stateless design: no session tracking, just pass the list each time
+
+### Example
+```bash
+linsenkasten gaps --context "Pace Layering" --context "Innovation" --context "Systems Thinking"
+# Output: Coverage: 7.1% (2/28 frames)
+#         Blind spots: 26 unexplored frames
+
+linsenkasten random --context "Pace Layering" --context "Innovation"
+# Returns: Lens from unexplored frame (80% chance)
+```
+
 ## [1.0.1] - 2025-01-21
 
 ### Improved
