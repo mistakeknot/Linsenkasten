@@ -187,12 +187,14 @@ class SupabaseLensStore:
             logger.error(f"Error getting related lenses for {lens_id}: {e}")
             return []
 
-    def get_frame_ids_for_lenses(self, lens_names: List[str]) -> Dict[str, List[str]]:
+    def get_frame_ids_for_lenses(self, lens_names: List[str], lens_to_frames_map: Dict[str, List[str]] = None) -> Dict[str, List[str]]:
         """
         Get frame_id associations for a list of lens names.
 
         Args:
             lens_names: List of lens names to look up
+            lens_to_frames_map: External mapping of lens_id -> frame_ids (e.g., from lens_frames_thematic.json)
+                                 frame_ids is NOT in Supabase - it must be provided externally
 
         Returns:
             Dictionary mapping lens_name -> [frame_ids]
@@ -203,12 +205,17 @@ class SupabaseLensStore:
                 logger.warning("get_frame_ids_for_lenses: Empty lens_names provided")
                 return {}
 
+            if lens_to_frames_map is None:
+                logger.error("get_frame_ids_for_lenses: lens_to_frames_map is required - frame_ids not in Supabase")
+                return {}
+
             logger.info(f"get_frame_ids_for_lenses: Looking up {len(lens_names)} lenses: {lens_names}")
 
-            # Strategy: Query all lenses and filter in Python
+            # Strategy: Query lenses for id and name, then use lens_to_frames_map
             # NOTE: Supabase uses 'name' field, not 'lens_name'
+            # NOTE: frame_ids is NOT in Supabase - it comes from lens_frames_thematic.json
             result = self.client.table('lenses') \
-                .select('name, frame_ids') \
+                .select('id, name') \
                 .execute()
 
             logger.info(f"get_frame_ids_for_lenses: Query returned {len(result.data) if result.data else 0} total lenses")
@@ -223,17 +230,20 @@ class SupabaseLensStore:
                 logger.info(f"get_frame_ids_for_lenses: Database sample (first 5): {db_sample}")
 
                 # Build mapping of lens name to frame_ids (only for target lenses)
+                # frame_ids come from lens_to_frames_map, NOT from Supabase
                 lens_frame_map = {}
                 for lens in result.data:
                     name = lens.get('name')  # Use 'name' not 'lens_name'
+                    lens_id = lens.get('id')
 
                     # Debug: Log each comparison for target lenses
                     if name in ['The Thinking Hat', 'Getting over the Hump', 'Footguns']:
-                        logger.info(f"get_frame_ids_for_lenses: Found target lens: '{name}' (repr: {repr(name)})")
+                        logger.info(f"get_frame_ids_for_lenses: Found target lens: '{name}' (id: {lens_id})")
 
                     # Only include if this lens is in our target set
                     if name in target_names:
-                        frame_ids = lens.get('frame_ids', [])
+                        # Look up frame_ids from external mapping
+                        frame_ids = lens_to_frames_map.get(lens_id, [])
 
                         # Handle frame_ids as either list or single string
                         if isinstance(frame_ids, str):
@@ -242,6 +252,7 @@ class SupabaseLensStore:
                             frame_ids = []
 
                         lens_frame_map[name] = frame_ids
+                        logger.info(f"get_frame_ids_for_lenses: Mapped '{name}' -> {len(frame_ids)} frames")
 
                 logger.info(f"get_frame_ids_for_lenses: Built map with {len(lens_frame_map)} entries (filtered from {len(result.data)} total)")
                 if lens_frame_map:

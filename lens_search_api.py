@@ -157,8 +157,9 @@ def calculate_frame_coverage(context_lens_names: List[str]) -> Dict:
         # Get all available frame names from loaded FRAMES
         all_frame_names = get_all_frame_names()
 
-        # Get frame_ids for context lenses from Supabase
-        lens_frame_map = supabase_store.get_frame_ids_for_lenses(context_lens_names)
+        # Get frame_ids for context lenses from Supabase + LENS_TO_FRAMES mapping
+        # Note: frame_ids is not in Supabase, comes from lens_frames_thematic.json
+        lens_frame_map = supabase_store.get_frame_ids_for_lenses(context_lens_names, LENS_TO_FRAMES)
 
         # Count frame usage (converting frame_ids to names)
         explored_frames = {}
@@ -1647,7 +1648,7 @@ def detect_thinking_gaps():
     coverage = calculate_frame_coverage(context)
 
     # Debug: Add diagnostic info to response
-    lens_frame_map = supabase_store.get_frame_ids_for_lenses(context)
+    lens_frame_map = supabase_store.get_frame_ids_for_lenses(context, LENS_TO_FRAMES)
     debug_info = {
         'context_received': context,
         'lens_frame_map_size': len(lens_frame_map),
