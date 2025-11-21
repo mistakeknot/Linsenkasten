@@ -1,0 +1,521 @@
+{
+  "connections": [
+    {
+      "source_id": "lens_161_weekly_eye_of_sauron",
+      "target_id": "lens_161_headline_founder_mode",
+      "source_name": "Eye of Sauron",
+      "target_name": "Founder Mode",
+      "weight": 0.91,
+      "type": "contrast",
+      "insight": "Eye of Sauron shows toxic oversight destroying autonomy, while Founder Mode advocates strategic intervention building culture. Together they map the spectrum from destructive to constructive leadership presence."
+    },
+    {
+      "source_id": "lens_13_weekly_kobayashi_maru",
+      "target_id": "lens_17_headline_dancing_with_delusion",
+      "source_name": "Kobayashi Maru",
+      "target_name": "Dancing with delusion",
+      "weight": 0.9,
+      "type": "synthesis",
+      "insight": "Both explore navigating impossible spaces - Kobayashi Maru through rewriting constraints, Dancing with Delusion through embracing the space between possible and impossible. Together they suggest innovation requires both breaking rules and accepting uncertainty."
+    },
+    {
+      "source_id": "lens_50_headline_kintsugi",
+      "target_id": "lens_100_weekly_the_palimpsest",
+      "source_name": "Kintsugi",
+      "target_name": "The Palimpsest",
+      "weight": 0.89,
+      "type": "synthesis",
+      "insight": "Kintsugi celebrates visible repair with gold, palimpsest reveals layers of overwritten history. Both honor the beauty in accumulated experience and transformation rather than pristine originals."
+    },
+    {
+      "source_id": "lens_26_weekly_hormesis",
+      "target_id": "lens_15_weekly_getting_over_the_hump",
+      "source_name": "Hormesis",
+      "target_name": "Getting over the hump",
+      "weight": 0.88,
+      "type": "principle",
+      "insight": "Both recognize beneficial stress - hormesis shows how small doses strengthen systems, while getting over the hump uses crisis energy for transitions. Together they reveal controlled disruption as a growth catalyst."
+    },
+    {
+      "source_id": "lens_117_weekly_composable_alphabets",
+      "target_id": "lens_135_weekly_crystallized_imagination",
+      "source_name": "Composable alphabets",
+      "target_name": "Crystallized Imagination",
+      "weight": 0.87,
+      "type": "synthesis",
+      "insight": "Composable alphabets provide building blocks for infinite expression, while crystallized imagination transforms ideas into tangible forms. Together they map the journey from potential to manifestation."
+    },
+    {
+      "source_id": "lens_21_weekly_thinking_space",
+      "target_id": "lens_118_weekly_the_adjacent_possible",
+      "source_name": "Thinking Space",
+      "target_name": "The adjacent possible",
+      "weight": 0.86,
+      "type": "principle",
+      "insight": "Thinking spaces create frameworks for exploration without judgment, while adjacent possible defines the boundary of achievable innovation. Together they balance creative freedom with realistic constraints."
+    },
+    {
+      "source_id": "lens_23_weekly_the_undercurrent",
+      "target_id": "lens_25_weekly_the_subject-object_shift",
+      "source_name": "The undercurrent",
+      "target_name": "The subject-object shift",
+      "weight": 0.85,
+      "type": "principle",
+      "insight": "The undercurrent reveals unseen forces shaping outcomes, while subject-object shift enables seeing those forces as separate from self. Combined, they offer a path from being swept by currents to navigating them consciously."
+    },
+    {
+      "source_id": "lens_19_weekly_ooda_loop",
+      "target_id": "lens_160_weekly_recursive_de_risking",
+      "source_name": "OODA Loop",
+      "target_name": "Recursive de-risking",
+      "weight": 0.84,
+      "type": "emergence",
+      "insight": "OODA Loop provides rapid tactical adaptation, while recursive de-risking offers strategic risk reduction. Combined, they create a multi-timescale approach to navigating uncertainty."
+    },
+    {
+      "source_id": "lens_99_weekly_crumple_zones",
+      "target_id": "lens_28_weekly_forest_debris",
+      "source_name": "Crumple Zones",
+      "target_name": "Forest Debris",
+      "weight": 0.83,
+      "type": "application",
+      "insight": "Both recognize protective value in apparent waste - crumple zones absorb impact through designed failure, forest debris prevents catastrophic fires. They reveal how strategic redundancy creates resilience."
+    },
+    {
+      "source_id": "lens_36_weekly_watermelon_status",
+      "target_id": "lens_45_weekly_whale_fall",
+      "source_name": "Watermelon status",
+      "target_name": "Whale fall",
+      "weight": 0.82,
+      "type": "contrast",
+      "insight": "Watermelon status conceals decay behind false positivity, while whale fall celebrates decay as nourishment. Together they reveal how organizational death can be either hidden toxin or open transformation."
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_14_headline_cultivating_our_inner_dialogue",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Cultivating our inner dialogue",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_15_headline_the_intertwined_pandemics",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "the intertwined pandemics",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_16_headline_war_and_peace_in_the_adaptive_landscape",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "War and peace in the adaptive landscape",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_17_weekly_the_wile_e._coyote_moment",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "The Wile E. Coyote moment",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_19_headline_playful_lessons_in_systems_thinking",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Playful lessons in systems thinking",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_19_weekly_ooda_loop",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "OODA Loop",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_21_weekly_thinking_space",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Thinking Space",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_21_headline_scrambling_status_games_with_zoom",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Scrambling status games with Zoom",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_28_headline_the_struggle_against_preferential_attachment",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "the struggle against preferential attachment",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_30_weekly_plan_voisin",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Plan Voisin",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_31_weekly_simple_rules",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "simple rules",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_44_weekly_lens_types",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "lens types",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_51_weekly_drawing_a_distinction",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Drawing a distinction",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_57_weekly_i_would_simply",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "I would simply",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_62_weekly_lens_portmanteau",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "lens portmanteau",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_69_headline_the_unvarying_infrastructure_of_variety",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "the unvarying infrastructure of variety",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_70_headline_choose_enthusiastic_dance_partners",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Choose enthusiastic dance partners",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_75_headline_from_molehills_to_mountains",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "From molehills to mountains",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_78_headline_safe-to-fail_experiments",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Safe-to-fail experiments",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_86_headline_intricate_complexity_photo_knolling",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Intricate complexity photo knolling",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_95_weekly_whale_fall,_redux",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "whale fall, redux",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_96_headline_the_disappearing_problem",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "The disappearing problem",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_100_weekly_the_palimpsest",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "The Palimpsest",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_107_headline_facets_of_identity",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Facets of identity",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_108_headline_stumbling_towards_manageable_uncertainty",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Stumbling towards manageable uncertainty",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_109_headline_trust_is_a_long_game",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Trust is a long game",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_111_weekly_hysteresis",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "hysteresis",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_115_headline_of_tide_pools_and_fish_tanks",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Of tide pools and fish tanks",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_122_weekly_legibility",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "legibility",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_125_weekly_stop_energy",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "stop energy",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_127_weekly_nemawashi",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "nemawashi",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_130_headline_toward_better_hypotheses",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Toward better hypotheses",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_132_weekly_n_ply_thinking",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "N-ply thinking",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_135_weekly_crystallized_imagination",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Crystallized Imagination",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_137_weekly_socratic_humility",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Socratic humility",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_141_headline_an_abundance_of_value",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "An abundance of value",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_150_weekly_trilemma",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Trilemma",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_152_weekly_the_adjacent_possible_mirage",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "the adjacent possible mirage",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_159_headline_composting_consciousness",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "Composting consciousness",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_11_weekly_situation-behavior-impact",
+      "target_id": "lens_160_weekly_recursive_de_risking",
+      "source_name": "Situation-Behavior-Impact",
+      "target_name": "recursive de-risking",
+      "weight": 0.7,
+      "type": "principle",
+      "insight": "Both explore systems",
+      "discovered_by": "claude-analysis"
+    }
+  ],
+  "metadata": {
+    "total_lenses": 258,
+    "total_connections": 100,
+    "analysis_method": "claude-deep-analysis",
+    "connection_types": {
+      "principle": "Shared underlying principles or mechanics",
+      "contrast": "Opposing but complementary perspectives",
+      "synthesis": "Combination creates new insights",
+      "emergence": "Pattern emerges from interaction",
+      "application": "Practical connection across domains"
+    }
+  },
+  "insights": {
+    "key_patterns": [
+      "Many lenses explore the tension between control and emergence",
+      "Transformation appears as both gradual evolution and sudden shifts",
+      "Trust and vulnerability emerge as fundamental to complex systems",
+      "Boundaries serve both as constraints and creative catalysts",
+      "Individual and collective dynamics mirror each other across scales"
+    ],
+    "cross_episode_themes": [
+      "Early episodes focus on individual cognition, later ones on systemic dynamics",
+      "Recurring exploration of how to navigate uncertainty",
+      "Evolution from simple frameworks to embracing paradox",
+      "Consistent thread of finding agency within constraints"
+    ]
+  }
+}
