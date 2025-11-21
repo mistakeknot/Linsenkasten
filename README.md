@@ -186,6 +186,45 @@ Use random_lens_provocation to get a creative spark
 
 Break out of local thinking patterns.
 
+### Gap Detection Workflow (NEW in v1.1.0)
+
+**Scenario:** You've been exploring lenses about systems and technology. Are you missing important perspectives?
+
+```bash
+# Check what frames you've covered
+linsenkasten gaps --context "Pace Layering" --context "Innovation" --context "Systems Thinking"
+
+# Output:
+# Coverage: 7.1% (2/28 frames)
+# Unexplored: 26 frames - Balance & Paradox, Communication & Dialogue, Creative Problem Solving...
+```
+
+**Get gap-aware suggestions to explore blind spots:**
+
+```bash
+# System biases toward unexplored frames (80% chance)
+linsenkasten random --context "Pace Layering" --context "Innovation" --context "Systems Thinking"
+
+# Suggests: "Logic and Gut" (decision-making lens)
+# Coverage jumps to 14.3% (4/28 frames)
+```
+
+**Continue exploring to build comprehensive coverage:**
+
+```bash
+linsenkasten random --context "Pace Layering" --context "Innovation" --context "Logic and Gut"
+
+# Suggests: "Dancing with Art" (artistic expression evolution)
+# Coverage: 18% (5/28 frames)
+
+linsenkasten random --context "Pace Layering" --context "Innovation" --context "Logic and Gut" --context "Dancing with Art"
+
+# Suggests: "The Geometry of Dissent" (organizational dynamics)
+# Coverage: 21.4% (6/28 frames)
+```
+
+**The Result:** Started in tech/systems comfort zone → guided to cognitive processes, creative expression, and social dynamics. Exactly the lateral moves that break habitual thinking!
+
 ## Creative Workflows
 
 **Lateral Thinking:**
