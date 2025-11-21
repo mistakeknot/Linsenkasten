@@ -129,9 +129,26 @@ export async function getLensNeighborhood(lens, radius = 2) {
 
 /**
  * Get random lens provocation
+ * @param {string[]} context - Optional array of lens names for gap-aware selection
  */
-export async function getRandomProvocation() {
+export async function getRandomProvocation(context = null) {
+  if (context && context.length > 0) {
+    const contextParams = context.map(name => `context=${encodeURIComponent(name)}`).join('&');
+    return fetchFromAPI(`/creative/random?${contextParams}`);
+  }
   return fetchFromAPI('/creative/random');
+}
+
+/**
+ * Detect thinking gaps - analyze conceptual coverage
+ * @param {string[]} context - Array of explored lens names
+ */
+export async function detectThinkingGaps(context) {
+  if (!context || context.length === 0) {
+    throw new Error('Context parameter required (list of explored lens names)');
+  }
+  const contextParams = context.map(name => `context=${encodeURIComponent(name)}`).join('&');
+  return fetchFromAPI(`/creative/gaps?${contextParams}`);
 }
 
 /**

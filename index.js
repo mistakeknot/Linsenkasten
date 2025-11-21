@@ -238,10 +238,31 @@ class LinsenkastenMCP {
         },
         {
           name: 'random_lens_provocation',
-          description: 'Get a random lens for creative provocation - break out of habitual thinking patterns',
+          description: 'Get a random lens for creative provocation - break out of habitual thinking patterns. Optionally provide context for gap-aware selection.',
           inputSchema: {
             type: 'object',
-            properties: {},
+            properties: {
+              context: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'Optional: List of lens names already explored (enables gap-aware biased selection toward unexplored conceptual dimensions)',
+              },
+            },
+          },
+        },
+        {
+          name: 'detect_thinking_gaps',
+          description: 'Analyze conceptual coverage to identify blind spots in thinking - reveals which FLUX frames have been explored vs neglected',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              context: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'List of lens names that have been explored (e.g., lenses used in recent conversation)',
+              },
+            },
+            required: ['context'],
           },
         },
       ],
@@ -784,11 +805,24 @@ Applications:
           }
 
           case 'random_lens_provocation': {
-            const results = await api.getRandomProvocation();
+            const { context } = request.params.arguments || {};
+            const results = await api.getRandomProvocation(context);
 
             if (results.success && results.provocation) {
               const lens = results.provocation;
               let response = `# 🎲 Random Lens Provocation\n\n`;
+
+              // Show gap analysis if context was provided
+              if (results.gap_analysis) {
+                const gap = results.gap_analysis;
+                response += `## 🎯 Gap Analysis\n`;
+                response += `Coverage: ${gap.coverage.explored}/${gap.coverage.total} frames explored (${Math.round((gap.coverage.explored / gap.coverage.total) * 100)}%)\n`;
+                if (gap.was_gap_biased) {
+                  response += `✨ This suggestion targets an unexplored area: **${gap.suggested_from_frame}**\n`;
+                }
+                response += `\n`;
+              }
+
               response += `## ${lens.name} (Episode ${lens.episode})\n\n`;
               response += `${lens.definition}\n\n`;
 
@@ -828,6 +862,76 @@ Applications:
                     text: results.error || 'Could not generate provocation.',
                   },
                 ],
+              };
+            }
+          }
+
+          case 'detect_thinking_gaps': {
+            const { context } = request.params.arguments || {};
+
+            if (!context || context.length === 0) {
+              return {
+                content: [{
+                  type: 'text',
+                  text: 'Error: context parameter required (list of explored lens names)',
+                }],
+              };
+            }
+
+            const results = await api.detectThinkingGaps(context);
+
+            if (results.success) {
+              const cov = results.coverage;
+              let response = `# 🔍 Thinking Gap Analysis\n\n`;
+              response += `## Coverage Summary\n`;
+              response += `- **Explored**: ${cov.coverage_percentage}% (${Object.keys(cov.explored_frames).length}/${cov.total_frames} frames)\n`;
+              response += `- **Unexplored**: ${cov.unexplored_frames.length} frames\n`;
+              response += `- **Underexplored**: ${cov.underexplored_frames.length} frames (only 1 lens)\n\n`;
+
+              if (Object.keys(cov.explored_frames).length > 0) {
+                response += `## ✅ Explored Frames\n`;
+                Object.entries(cov.explored_frames).forEach(([frame, count]) => {
+                  response += `- **${frame}**: ${count} lens${count > 1 ? 'es' : ''}\n`;
+                });
+                response += `\n`;
+              }
+
+              if (cov.unexplored_frames.length > 0) {
+                response += `## ⚠️  Unexplored Frames (Blind Spots)\n`;
+                cov.unexplored_frames.slice(0, 10).forEach(frame => {
+                  response += `- ${frame}\n`;
+                });
+                if (cov.unexplored_frames.length > 10) {
+                  response += `\n_...and ${cov.unexplored_frames.length - 10} more_\n`;
+                }
+                response += `\n`;
+              }
+
+              if (results.suggestions && results.suggestions.length > 0) {
+                response += `## 💡 Suggested Lenses to Explore\n\n`;
+                results.suggestions.forEach(sugg => {
+                  response += `### ${sugg.frame}\n`;
+                  sugg.sample_lenses.forEach(lens => {
+                    response += `- **${lens.name}** (Ep. ${lens.episode}): ${lens.definition.substring(0, 100)}...\n`;
+                  });
+                  response += `\n`;
+                });
+              }
+
+              response += `\n${results.insight}`;
+
+              return {
+                content: [{
+                  type: 'text',
+                  text: response,
+                }],
+              };
+            } else {
+              return {
+                content: [{
+                  type: 'text',
+                  text: results.error || 'Could not analyze thinking gaps.',
+                }],
               };
             }
           }
