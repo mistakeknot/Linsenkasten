@@ -105,7 +105,7 @@
 - Progressive evidence gathering
 - Stops when threshold met
 
-### Phase 0c: MCP Integration
+### Phase 0c: MCP Integration ✅
 
 **New tools:**
 - `suggest_thinking_mode`: Recommend mode for problem
@@ -113,9 +113,9 @@
 - `refine_lens_application`: Improve quality iteratively
 
 **Enhanced tools:**
-- All lens retrieval includes belief statements
-- All responses include quality scores
-- All tools suggest lateral connections
+- `search_lenses`: Optional problem_context generates beliefs + quality
+- `get_lens`: Optional problem_context generates beliefs + quality
+- `analyze_with_lens`: Returns beliefs + quality (replaces templated text)
 
 ### Validation
 
@@ -159,6 +159,11 @@ linsenkasten/
 1. `e14e8d9`: Add complete benchmark suite for agent improvements
 2. `baad640`: Add benchmark baseline results (+153% improvement)
 3. `c9ddd2c`: Implement Phase 0 foundations (Thinking Modes + Belief Statements)
+4. `827ad30`: Implement Phase 0b (Quality Evaluation + Synthesis + Refinement)
+5. `386f8bd`: Add comprehensive session summary
+6. `83149c5`: Add Phase 0c integration guide for MCP tools
+7. `687577b`: Implement Phase 0c MCP integration
+8. `e61f4cb`: Convert Phase 0 modules to ES module syntax
 
 ## Key Decisions Made
 
@@ -175,9 +180,9 @@ linsenkasten/
 ✅ **Baseline established:** +153% improvement validated
 ✅ **Research completed:** Patterns identified and synthesized
 ✅ **Phase 0a implemented:** Thinking modes + belief statements
-⏳ **Phase 0b next:** Quality evaluation + synthesis module
-⏳ **Phase 0c next:** Iterative refinement + MCP integration
-⏳ **Validation:** Re-test to confirm improvements maintained
+✅ **Phase 0b implemented:** Quality evaluation + synthesis + refinement
+✅ **Phase 0c implemented:** MCP integration complete, server tested
+⏳ **Validation:** Re-test benchmark to confirm improvements maintained
 
 ## Impact Summary
 
@@ -203,25 +208,27 @@ linsenkasten/
 
 ## Next Session Recommendations
 
-1. **Complete Phase 0b** (2-3 hours):
-   - Implement quality-evaluation.js
-   - Implement synthesis.js
-   - Implement refinement.js
-
-2. **Integrate with MCP** (1-2 hours):
-   - Update index.js with new tools
-   - Enhance existing tools with beliefs
-   - Update CLI with same enhancements
-
-3. **Re-test benchmark** (1 hour):
+1. **Re-test benchmark** (1-2 hours):
    - Run 3 sample problems with Phase 0 complete
-   - Compare: baseline → current → phase0
+   - Compare: baseline → with-linsenkasten → with-phase0
    - Validate +67% maintained/exceeded
+   - Document improvements in Phase 0 vs baseline
 
-4. **Full validation** (optional, 2-3 hours):
-   - Test all 15 problems
+2. **CLI Integration** (optional, 1-2 hours):
+   - Add `linsenkasten mode <problem>` command
+   - Add `linsenkasten refine <lens> <problem>` command
+   - Enhance existing commands with belief generation
+   - Update help text and examples
+
+3. **Full validation** (optional, 2-3 hours):
+   - Test all 15 problems with Phase 0
    - Generate comprehensive report
    - Document for publication/sharing
+
+4. **Documentation updates** (1 hour):
+   - Update README.md with new capabilities
+   - Add Phase 0 usage examples
+   - Document new workflow patterns
 
 ## Session Statistics
 
