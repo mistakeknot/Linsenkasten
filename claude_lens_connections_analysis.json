@@ -489,6 +489,51 @@
       "type": "principle",
       "insight": "Both explore systems",
       "discovered_by": "claude-analysis"
+    },
+    {
+      "source_id": "lens_12_weekly_explore_vs._exploit",
+      "target_id": "lens_22_weekly_proof_of_work",
+      "source_name": "Explore vs. Exploit",
+      "target_name": "Proof of Work",
+      "weight": 0.85,
+      "type": "contrast",
+      "insight": "Explore vs. Exploit balances learning (exploration) with optimization (exploitation). Proof of Work demands demonstrated effort before validation. Tension: breadth of experimentation vs depth of commitment."
+    },
+    {
+      "source_id": "lens_16_weekly_approach_or_avoid",
+      "target_id": "lens_15_weekly_getting_over_the_hump",
+      "source_name": "Approach or Avoid",
+      "target_name": "Getting over the Hump",
+      "weight": 0.82,
+      "type": "contrast",
+      "insight": "Approach or Avoid focuses on framing choices positively (approach) versus negatively (avoid). Getting over the Hump emphasizes crisis energy needed for transitions. Tension: proactive framing vs reactive momentum."
+    },
+    {
+      "source_id": "lens_13_weekly_kobayashi_maru",
+      "target_id": "lens_14_weekly_what_would_it_take_to_succeed?",
+      "source_name": "Kobayashi Maru",
+      "target_name": "What Would It Take to Succeed?",
+      "weight": 0.88,
+      "type": "contrast",
+      "insight": "Kobayashi Maru presents no-win scenarios requiring constraint violation. What Would It Take to Succeed reframes problems optimistically. Tension: accepting impossibility vs assuming possibility."
+    },
+    {
+      "source_id": "lens_11_headline_the_disappointing_super-chicken",
+      "target_id": "lens_21_headline_scrambling_status_games_with_zoom",
+      "source_name": "The Disappointing Super-Chicken",
+      "target_name": "Scrambling Status Games with Zoom",
+      "weight": 0.8,
+      "type": "contrast",
+      "insight": "Super-Chicken shows how elite competition destroys team performance. Scrambling Status Games shows how virtual environments disrupt traditional hierarchies. Tension: competition within vs competition flattened."
+    },
+    {
+      "source_id": "lens_20_weekly_static_and_dynamic_equilibrium",
+      "target_id": "lens_19_weekly_ooda_loop",
+      "source_name": "Static and Dynamic Equilibrium",
+      "target_name": "OODA Loop",
+      "weight": 0.86,
+      "type": "contrast",
+      "insight": "Static/Dynamic Equilibrium describes stable states (stuck) versus flowing states. OODA Loop emphasizes rapid cycles for adaptability. Tension: equilibrium-seeking vs disequilibrium-embracing."
     }
   ],
   "metadata": {
