@@ -36,12 +36,11 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           if [ -n "${{ inputs.limit }}" ]; then
-            python scripts/precompute_embeddings.py --limit ${{ inputs.limit }}
+            python scripts/reembed_with_sentence_transformers.py --limit ${{ inputs.limit }}
           else
-            python scripts/precompute_embeddings.py
+            python scripts/reembed_with_sentence_transformers.py
           fi
 
       - name: Notify on success
