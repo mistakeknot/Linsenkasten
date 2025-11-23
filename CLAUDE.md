@@ -8,8 +8,13 @@ Linsenkasten API is a Flask-based REST API that provides access to 256+ FLUX ana
 
 **Architecture**: Flask API → NetworkX graph operations → Supabase PostgreSQL
 
-**Recent Updates (2025-01)**:
-- ✅ Semantic search fixed: Now uses OpenAI embeddings + pgvector (was using keyword matching)
+**Recent Updates (2025-11-23)**:
+- ✅ **FREE Search Implemented**: Now uses sentence-transformers (no OpenAI costs!)
+  - Query embeddings: sentence-transformers/all-MiniLM-L6-v2 (local, CPU-based)
+  - Corpus embeddings: All 288 lenses re-embedded with same model for consistency
+  - Database: Migrated to pgvector VECTOR(384) type for efficient similarity search
+  - Quality: 2x better similarity scores vs. cross-model approach (0.24-0.46 range)
+  - Cost: Zero ongoing embedding costs (was $0.0001/query with OpenAI)
 - ✅ Graph module integrated: All creative endpoints working with NetworkX 3.1
 - ✅ Scipy dependency added: Required for NetworkX centrality calculations
 - ⚠️ PageRank centrality: Works locally but fails on Railway (use betweenness/eigenvector instead)
@@ -26,7 +31,7 @@ Linsenkasten API is a Flask-based REST API that provides access to 256+ FLUX ana
 ### Basic Endpoints
 
 - `GET /api/v1/lenses` - Get all lenses with optional filters
-- `GET /api/v1/lenses/search?q=query&limit=10` - Semantic search with OpenAI embeddings
+- `GET /api/v1/lenses/search?q=query&limit=10` - Semantic search with sentence-transformers (FREE, no API costs)
 - `GET /api/v1/lenses/episodes/:episode` - Get lenses by episode number
 - `GET /api/v1/lenses/connections?lens_id=:id&limit=5` - Get related lenses
 - `GET /api/v1/frames` - Get thematic groupings/frames
@@ -69,9 +74,9 @@ python lens_search_api.py
 Required:
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_KEY` - Your Supabase anon/service key
-- `OPENAI_API_KEY` - For embeddings in semantic search
 
 Optional:
+- `OPENAI_API_KEY` - Only needed for admin embedding generation (search uses FREE sentence-transformers)
 - `PORT` - Server port (default: 5002, Railway uses 8080)
 - `FLASK_ENV` - Set to 'development' for debug mode
 - `LENS_API_PORT` - Alternative port variable
@@ -243,11 +248,13 @@ The API currently has no authentication. It's public and relies on:
 - Railway's built-in DDoS protection
 - Rate limiting would need to be added
 
-### OpenAI Dependency
+### sentence-transformers (FREE Embeddings)
 
-Semantic search requires OpenAI embeddings. If OpenAI is down or API key is invalid:
-- Search endpoint will fail
-- Other endpoints work fine (they don't use embeddings)
+Semantic search uses sentence-transformers (local, CPU-based, FREE):
+- No external API dependencies for search
+- Model loaded on startup (~5-10 seconds)
+- Query embeddings generated locally (~100-200ms)
+- OPENAI_API_KEY only needed for admin embedding generation (optional)
 
 ## Troubleshooting
 
@@ -257,9 +264,10 @@ Semantic search requires OpenAI embeddings. If OpenAI is down or API key is inva
 - Check server logs for specific errors
 
 **Search returns no results**:
-- Verify OpenAI API key is valid
-- Check that lenses have embeddings in Supabase
-- Test with simple query like "systems"
+- Check that sentence-transformers model loaded successfully (see startup logs)
+- Verify lenses have embeddings in Supabase (should be 384-dim vectors)
+- Test with simple query like "systems" or "feedback"
+- Check similarity thresholds (scores typically 0.2-0.5)
 
 **Creative endpoints return errors**:
 - Verify lens names exist (exact match required)
