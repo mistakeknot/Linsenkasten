@@ -42,6 +42,8 @@ These use NetworkX graph operations:
 - `GET /api/v1/creative/central?measure=betweenness&limit=10` - Get central lenses (betweenness, pagerank, eigenvector)
 - `GET /api/v1/creative/neighborhood?lens=A&radius=2` - Explore conceptual neighborhood
 - `GET /api/v1/creative/random` - Get random lens provocation with suggestions
+- `GET /api/v1/creative/clusters` - Get lens clusters/communities (NEW - 2025-11-22)
+- `GET /api/v1/creative/gaps?context=A&context=B` - Detect thinking gaps in exploration
 
 **Known Limitation**: PageRank centrality (`measure=pagerank`) works locally but fails on Railway with a system-level error (likely memory/architecture constraints). Fallback to betweenness is implemented but Railway crashes before Python can catch the error. Use `measure=betweenness` or `measure=eigenvector` instead - both work perfectly and provide similar hub-finding functionality.
 
