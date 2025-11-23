@@ -13,6 +13,10 @@ import numpy as np
 from supabase import create_client, Client
 import openai
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Import sentence-transformers for free local embeddings
 try:
     from sentence_transformers import SentenceTransformer
@@ -20,10 +24,6 @@ try:
 except ImportError:
     HAS_SENTENCE_TRANSFORMERS = False
     logger.warning("sentence-transformers not installed. Will fall back to OpenAI for query embeddings.")
-
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 class SupabaseLensStore:
     """Supabase-based storage for FLUX lenses with vector search capabilities."""
