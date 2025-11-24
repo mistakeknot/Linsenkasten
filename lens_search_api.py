@@ -386,7 +386,7 @@ def search_lenses():
         return jsonify(cached_result)
 
     # Use semantic search with embeddings (returns results sorted by similarity)
-    search_results = supabase_store.search_lenses_by_embedding(query, k=20)
+    search_results = supabase_store.search_lenses(query, k=20)
 
     # Format results for consistent API response
     formatted_results = []
