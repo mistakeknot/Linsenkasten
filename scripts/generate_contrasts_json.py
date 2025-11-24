@@ -47,9 +47,11 @@ class ContrastGenerator:
         logger.info(f"Found {len(self.existing_contrasts)} existing contrasts")
 
     def load_lenses(self) -> List[Dict]:
-        """Load all lenses from JSON file"""
-        with open(LENSES_FILE, 'r') as f:
-            lenses = json.load(f)
+        """Load all lenses from Supabase (ensures IDs match database)"""
+        logger.info("Fetching lenses from Supabase...")
+        response = self.supabase.table('lenses').select('id, name, definition, related_concepts, lens_type').execute()
+        lenses = response.data
+        logger.info(f"Fetched {len(lenses)} lenses from Supabase")
         return lenses
 
     def load_existing_contrasts(self) -> List[Dict]:
@@ -107,13 +109,53 @@ class ContrastGenerator:
         similarity = dot_product / (norm1 * norm2)
         return 1.0 - similarity
 
+    def calculate_dialectic_score(self, source_lens: Dict, target_lens: Dict) -> float:
+        """Calculate how dialectically opposed two lenses are based on their definitions"""
+        source_def = source_lens.get('definition', '').lower()
+        target_def = target_lens.get('definition', '').lower()
+
+        # Dialectic keyword pairs (opposing concepts)
+        dialectic_pairs = [
+            ('centralized', 'decentralized'),
+            ('control', 'freedom'),
+            ('stability', 'change'),
+            ('conservative', 'liberal'),
+            ('individual', 'collective'),
+            ('short-term', 'long-term'),
+            ('reactive', 'proactive'),
+            ('top-down', 'bottom-up'),
+            ('rigid', 'flexible'),
+            ('specialized', 'generalized'),
+            ('compete', 'cooperate'),
+            ('open', 'closed'),
+            ('fast', 'slow'),
+            ('explicit', 'implicit'),
+            ('formal', 'informal')
+        ]
+
+        score = 0.0
+        for word1, word2 in dialectic_pairs:
+            # Check if one lens mentions first concept and other mentions second
+            if (word1 in source_def and word2 in target_def) or \
+               (word2 in source_def and word1 in target_def):
+                score += 0.2  # Add 0.2 for each dialectic pair found
+
+        # Cap at 1.0
+        return min(score, 1.0)
+
     def find_contrast_candidates(self, source_lens: Dict, limit: int = 5) -> List[Dict]:
-        """Find potential contrast candidates for a lens"""
+        """Find potential contrast candidates for a lens using improved dialectic detection"""
         source_embedding = self.get_lens_embedding(source_lens['id'])
         if source_embedding is None:
             return []
 
         source_concepts = set(c.lower() for c in source_lens.get('related_concepts', []))
+
+        # Generic concepts to filter out (too broad for meaningful contrasts)
+        generic_concepts = {
+            'core concepts', 'systems thinking', 'thinking', 'concepts',
+            'strategy', 'management', 'leadership', 'organizational'
+        }
 
         candidates = []
 
@@ -136,23 +178,37 @@ class ContrastGenerator:
             if target_embedding is None:
                 continue
 
-            # Calculate distance (high distance = opposite concepts)
+            # Calculate distance (sweet spot for dialectic opposition: 0.65-0.92)
             distance = self.cosine_distance(source_embedding, target_embedding)
 
             # Check for shared concepts (need some connection for meaningful contrast)
             target_concepts = set(c.lower() for c in target_lens.get('related_concepts', []))
             shared_concepts = source_concepts & target_concepts
 
-            # Good contrast candidate: high distance + shared domain
-            if distance > 0.6 and len(shared_concepts) > 0:
+            # Filter out generic shared concepts
+            specific_shared = shared_concepts - generic_concepts
+
+            # Require: distance in sweet spot + meaningful shared concepts
+            # Meaningful = at least 1 specific concept OR 2+ generic concepts
+            has_meaningful_shared = len(specific_shared) >= 1 or len(shared_concepts) >= 2
+
+            if 0.65 <= distance <= 0.92 and has_meaningful_shared:
+                # Calculate dialectic score based on opposing keywords in definitions
+                dialectic_score = self.calculate_dialectic_score(source_lens, target_lens)
+
+                # Combined score: 70% distance + 30% dialectic keywords
+                combined_score = (distance * 0.7) + (dialectic_score * 0.3)
+
                 candidates.append({
                     'lens': target_lens,
                     'distance': distance,
+                    'dialectic_score': dialectic_score,
+                    'combined_score': combined_score,
                     'shared_concepts': list(shared_concepts)
                 })
 
-        # Sort by distance (highest first) and limit
-        candidates.sort(key=lambda x: x['distance'], reverse=True)
+        # Sort by combined score (highest first) and limit
+        candidates.sort(key=lambda x: x['combined_score'], reverse=True)
         return candidates[:limit]
 
     def generate_insight(self, source_lens: Dict, target_lens: Dict,
@@ -201,14 +257,18 @@ class ContrastGenerator:
             best = candidates[0]
             target_lens = best['lens']
             distance = best['distance']
+            dialectic_score = best['dialectic_score']
+            combined_score = best['combined_score']
             shared_concepts = best['shared_concepts']
 
             # Generate insight
             insight = self.generate_insight(source_lens, target_lens, distance, shared_concepts)
 
-            # Calculate weight (0.80-0.95 range based on distance)
-            weight = 0.80 + (distance - 0.6) * 0.375  # Maps 0.6-1.0 distance to 0.80-0.95
-            weight = round(weight, 2)
+            # Calculate weight based on combined score (0.80-0.95 range)
+            # Combined score ranges from ~0.45 (min) to ~0.95 (max)
+            # Map to weight range 0.80-0.95
+            weight = 0.80 + (combined_score - 0.45) * 0.30  # Maps 0.45-0.95 to 0.80-0.95
+            weight = max(0.80, min(0.95, round(weight, 2)))  # Clamp to range
 
             contrast = {
                 'source_id': source_lens['id'],
@@ -218,6 +278,8 @@ class ContrastGenerator:
                 'insight': insight,
                 'metadata': {
                     'distance': round(distance, 3),
+                    'dialectic_score': round(dialectic_score, 3),
+                    'combined_score': round(combined_score, 3),
                     'shared_concepts': shared_concepts,
                     'generated_by': 'generate_contrasts_json.py'
                 }
@@ -225,7 +287,7 @@ class ContrastGenerator:
 
             new_contrasts.append(contrast)
 
-            logger.info(f"  → {target_lens['name']} (distance: {distance:.3f}, weight: {weight})")
+            logger.info(f"  → {target_lens['name']} (dist: {distance:.3f}, dial: {dialectic_score:.2f}, score: {combined_score:.3f}, weight: {weight})")
 
         return new_contrasts
 
