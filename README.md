@@ -7,7 +7,7 @@ A cognitive augmentation toolkit that gives AI agents access to 288 FLUX analyti
 
 ## What is Linsenkasten?
 
-> **✨ New in v2.1.0**: Cross-platform support! Use Linsenkasten with ChatGPT, Codex CLI, and any AI agent via OpenAPI/function calling schemas. Plus: dialectic triads (thesis/antithesis/synthesis) and learning progressions.
+> **✨ New in v2.2.1**: Fixed MCP server startup issues with Claude Desktop. Now provides separate `linsenkasten` (CLI) and `linsenkasten-mcp` (MCP server) commands.
 
 Linsenkasten ("lens box" in German) is a knowledge graph of analytical frameworks from the [FLUX Collective](https://read.fluxcollective.org/) newsletter. It transforms 288 conceptual lenses into an explorable graph that AI agents can navigate to:
 
@@ -317,7 +317,22 @@ See [docs/chatgpt-gpt-config.md](docs/chatgpt-gpt-config.md) for detailed instru
 
 ## Installation Options
 
-### Option 1: npm Package (Recommended)
+### Option 1: npx (Recommended - No Install)
+
+Add to your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "linsenkasten": {
+      "command": "npx",
+      "args": ["-y", "-p", "linsenkasten-mcp@latest", "linsenkasten-mcp"]
+    }
+  }
+}
+```
+
+### Option 2: Global Install
 
 Install via npm:
 
@@ -337,7 +352,7 @@ Add to your Claude Desktop config:
 }
 ```
 
-### Option 2: Local Development
+### Option 3: Local Development
 
 Want to run from source?
 

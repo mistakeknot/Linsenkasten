@@ -1,7 +1,8 @@
 {
   "mcpServers": {
     "linsenkasten": {
-      "url": "https://linsenkasten.com/api/mcp/v1/sse"
+      "command": "npx",
+      "args": ["-y", "-p", "linsenkasten-mcp@latest", "linsenkasten-mcp"]
     }
   }
 }

@@ -152,7 +152,7 @@ Update `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "linsenkasten": {
       "command": "npx",
-      "args": ["-y", "linsenkasten-mcp"]
+      "args": ["-y", "-p", "linsenkasten-mcp@latest", "linsenkasten-mcp"]
     }
   }
 }
@@ -169,6 +169,8 @@ Or with global installation:
   }
 }
 ```
+
+> **Note:** As of v2.2.1, you must explicitly invoke `linsenkasten-mcp` (the MCP server binary) rather than just the package name, since the package also includes a CLI tool (`linsenkasten`).
 
 Restart Claude Desktop to load the server.
 
