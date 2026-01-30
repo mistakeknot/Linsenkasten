@@ -1,55 +1,15 @@
 {
-  "name": "linsenkasten-mcp",
-  "version": "2.2.1",
-  "description": "MCP server and CLI for 288 FLUX lenses - works with Claude, ChatGPT, Codex CLI via OpenAPI/function calling",
-  "main": "index.js",
-  "type": "module",
-  "bin": {
-    "linsenkasten": "./cli.js",
-    "linsenkasten-mcp": "./index.js"
-  },
+  "name": "linsenkasten",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'No build required'",
-    "start:local": "node index.js"
-  },
-  "keywords": [
-    "mcp",
-    "flux",
-    "lens",
-    "linsenkasten",
-    "cli",
-    "openai",
-    "chatgpt",
-    "gpt-actions",
-    "function-calling",
-    "openapi",
-    "systems-thinking",
-    "knowledge-graph",
-    "creative-problem-solving",
-    "dialectic-thinking",
-    "cognitive-augmentation",
-    "ai-tools"
-  ],
-  "author": "Mistake Knot",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mistakeknot/Linsenkasten.git"
-  },
-  "files": [
-    "index.js",
-    "cli.js",
-    "api-client.js",
-    "lib",
-    "docs",
-    "schemas",
-    "examples"
-  ],
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
-    "node-fetch": "^3.3.2",
-    "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "install:all": "pnpm -r install",
+    "dev:web": "pnpm --dir apps/web start",
+    "dev:mcp": "pnpm --dir packages/mcp start:local",
+    "build:web": "pnpm --dir apps/web build"
   }
 }
