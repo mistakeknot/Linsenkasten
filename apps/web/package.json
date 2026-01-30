@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start:frontend": "REACT_APP_LENS_API_URL=http://localhost:5003/api/v1 react-scripts start",
-    "start:backend": "cd .. && LENS_API_PORT=5003 python lens_search_api.py",
+    "start:backend": "cd ../api && LENS_API_PORT=5003 python lens_search_api.py",
     "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
